@@ -10,7 +10,7 @@ import { API } from "../../hooks/useFetch";
 
 const cookies = new Cookies();
 const userId = cookies.get("userId") || null;
-const token = cookies.get("token") || null;
+export const token = cookies.get("token") || null;
 
 const initialState = {
 	auth: {

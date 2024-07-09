@@ -11,8 +11,12 @@ import CartItem from "../home/CartItem";
 import { IoMdCart } from "react-icons/io";
 import { useSelector } from "react-redux";
 import NothingHere from "../_common/NothingHere";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const CartDrawer = ({ setOpenCart, openCart }) => {
+	const auth = useSelector((state) => state.auth.auth);
+	const navigate = useNavigate();
 	const cartItems = useSelector((state) => state.cart);
 
 	return (
@@ -60,11 +64,30 @@ const CartDrawer = ({ setOpenCart, openCart }) => {
 						</span>
 					)}
 				</p>
-				<div className="flex pt-3 border-t border-t-gray-300 justify-between gap-5">
-					<button className="w-2/4 py-2 rounded-full text-white font-medium bg-yellowish">
+				<div className="flex pt-3 border-t border-t-gray-300 justify-center gap-5">
+					<button
+						onClick={() => {
+							if (auth?.token) {
+								navigate(`/cart`);
+							} else {
+								toast.warn("Please, Login first.");
+							}
+						}}
+						className="w-2/4 py-2 rounded-full text-white font-medium bg-yellowish"
+					>
 						View Cart
 					</button>
-					<button className="w-2/4 py-2 rounded-full text-white font-medium bg-primary hover:bg-secondary transition duration-300">
+
+					<button
+						onClick={() => {
+							if (auth?.token) {
+								navigate(`/checkout`);
+							} else {
+								toast.warn("Please, Login first.");
+							}
+						}}
+						className="w-2/4 py-2 rounded-full text-white font-medium bg-primary hover:bg-secondary transition duration-300"
+					>
 						Checkout
 					</button>
 				</div>

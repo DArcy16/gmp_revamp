@@ -27,7 +27,7 @@ export const fetchCartItems = createAsyncThunk("cart_items", async (token) => {
 	}
 });
 
-export const addCartItem = createAsyncThunk("add_cart_item", async (props) => {
+export const addCartItem = createAsyncThunk("cart/add_item", async (props) => {
 	try {
 		const res = await axios.post(`${API}carts/add`, props.formData, {
 			headers: {
@@ -46,6 +46,27 @@ export const addCartItem = createAsyncThunk("add_cart_item", async (props) => {
 		return error;
 	}
 });
+
+export const changeCartQuantity = createAsyncThunk("cart/quantity_change" , async (props) => {
+	try {
+			const res = await axios.post(
+				`${API}carts/change-quantity`,
+				props.formData,
+				{
+					headers: {
+						Authorization: `Bearer ${props.token}`,
+					},
+				}
+			);
+			if(res.data.result) {
+				toast.success(res.data.message)
+			}
+			return props.formData;
+	} catch (error) {
+			console.log(error);
+			return error;
+	}
+})
 
 export const removeCartItem = createAsyncThunk(
 	"remove_cart_item",
@@ -95,6 +116,16 @@ const cartSlice = createSlice({
 					(item) => item.id !== action.payload
 				),
 			];
+		});
+		builder.addCase(changeCartQuantity.fulfilled, (state, action) => {
+			const index = state.data[0].cart_items.findIndex(item => item.id === action.payload.id );
+			console.log(index)
+			state.data[0].cart_items[index].quantity = action.payload.quantity;
+			state.data[0].cart_items[index].total_price = action.payload.quantity * state.data[0].cart_items[index].price;
+			state.data[0].cart_items[index].total_price_with_symbol =
+				(
+					action.payload.quantity * state.data[0].cart_items[index].price
+				).toLocaleString() + " MMK";
 		});
 	},
 });

@@ -115,7 +115,7 @@ const ProductDetails = ({
 				fetch(
 					`${API}products/variant/price?id=${product?.data[0]?.id}&variants=${variant}`,
 					{
-						methode: "GET",
+						method: "GET",
 						headers: {
 							Accept: "application/json",
 							"Content-Type": "application/json",

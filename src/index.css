@@ -97,6 +97,21 @@ body {
   background-color: var(--primary);
 }
 
+.active_step_animation {
+    animation: step_animation 1s ease-in 1;
+}
+
+@keyframes step_animation {
+    0% {
+      opacity: 0;
+      transform: translateX(-70%);
+    }
+    100% {
+      opacity: 100%;
+      transform: translateX(0);
+    }
+}
+
 /* Ant Design */
 .ant-dropdown-menu-item:hover {
 	background: var(--primary) !important;
@@ -302,3 +317,69 @@ body {
 ::-webkit-scrollbar-corner {
   background: #fff3;
 }
+
+/* Custom Radio */
+.custom_radio {
+  position: relative;
+}
+
+.custom_radio input[type='radio'] {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  height: 100%;
+  width: 100%;
+  border-radius: 10px;
+  position: absolute;
+  box-shadow: 7px 7px 15px rgba(2,28,53, 0.08);
+  cursor: pointer;
+  outline: none;
+}
+
+.custom_radio input[type='radio']:before {
+  content: "";
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  background-color: #f9fafd;
+  border: 1px solid #e2e6f3;
+  border-radius: 50%;
+  top: 20px;
+  right: 20px;
+}
+
+.custom_radio input[type='radio']:after {
+  content: "";
+  position: absolute;
+  height: 13px;
+  width: 13px;
+  background-color: transparent;
+  border-radius: 50%;
+  top: 24.5px;
+  right: 24.5px;
+}
+
+.custom_radio input[type='radio']:checked {
+  border: 1px solid var(--primary);
+}
+
+.custom_radio input[type='radio']:checked::after {
+  background-color: var(--primary);
+}
+
+
+/* Remove Up Down Arrow In Number Input */
+
+  input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* For Chrome, Safari, and Opera */
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+
+
+
